@@ -119,7 +119,7 @@ mintされた有効なメディア(non-burned media)の総数を取得
 
 ##### `fetchApproved(mediaId: BigNumberish)`
 
-指定のmediaIdの `approved account` を取得
+指定のmediaIdの許可されたアカウント（`approved account`） を取得
 
 ##### `fetchIsApprovedForAll(owner: string, operator: string)`
 
