@@ -30,13 +30,13 @@ constructor(
 
 #### chainID
 
-コンストラクタは chainID を使用して公式にサポートされているZoraプロトコルのアドレスを検索し、そのプロトコルに接続されたZoraインスタンスを返します。
-Mainnet の場合:1、Rinkebyの場合:4 しかない？
+コンストラクタは chainID を使用して公式にサポートされているZoraプロトコルのアドレスを検索し、そのプロトコルに接続されたZoraインスタンスを返します。  
+Mainnet の場合:1、Rinkebyの場合:4 （しかない？)  
 https://github.com/ourzora/core/tree/master/addresses
 
 #### mediaAddress, marketAddress
 
-Zoraプロトコルのアドレスを上書きするために用いるオプション。
+Zoraプロトコルのアドレスを上書きするために用いるオプション。  
 ローカルのブロックチェーン上での開発に利用される。両方設定するか両方nullである必要がある。
 
 ### 利用例
@@ -56,110 +56,143 @@ await zora.totalSupply()
 
 #### Read Functions
 
-* `fetchContentHash(mediaId: BigNumberish)`
+##### `fetchContentHash(mediaId: BigNumberish)`
+
 メディアの `contentHash` を取得
 
-* `fetchMetadataHash(mediaId: BigNumberish)`
+##### `fetchMetadataHash(mediaId: BigNumberish)`
+
 メディアの `metadataHash` を取得
 
-* `fetchContentURI(mediaId: BigNumberish)`
+##### `fetchContentURI(mediaId: BigNumberish)`
+
 メディアの `contentURI` を取得
 
-* `fetchMetadataURI(mediaId: BigNumberish)`
+##### `fetchMetadataURI(mediaId: BigNumberish)`
+
 メディアの `metadataURI` を取得
 
-* `fetchCreator(mediaId: BigNumberish)`
+##### `fetchCreator(mediaId: BigNumberish)`
+
 メディアの `creator` を取得
 
-* `fetchCurrentBidShares(mediaId: BigNumberish)`
+##### `fetchCurrentBidShares(mediaId: BigNumberish)`
+
 メディアの現在の `bidShares` を取得
 
-* `fetchCurrentAsk(mediaId: BigNumberish)`
-メディアの現在の `Ask` を取得
+##### `fetchCurrentAsk(mediaId: BigNumberish)`
 
-* `fetchCurrentBidForBidder(mediaId: BigNumberish, bidder: string)`
+メディアの現在の販売価格 `Ask` を取得
+
+##### `fetchCurrentBidForBidder(mediaId: BigNumberish, bidder: string)`
+
 メディアの現在の入札者(bidder)の入札額(`Bid`)を取得
 
-* `fetchPermitNonce(address: string)`
+##### `fetchPermitNonce(address: string)`
+
 アドレスの次の許可されたnonceを取得
 permit nonceとは？
 
-* `fetchMintWithSigNonces(address: string)`
+##### `fetchMintWithSigNonces(address: string)`
+
 アドレスの次の `mintWithSig nonce` を取得
 
-* `fetchBalanceOf(address: string)`
+##### `fetchBalanceOf(address: string)`
+
 Zoraインスタンスのアドレスのbalanceを取得
 
-* `fetchOwnerOf(mediaId: BigNumberish)`
+##### `fetchOwnerOf(mediaId: BigNumberish)`
+
 Zoraインスタンスのメディアのオーナーを取得
 
-* `fetchMediaOfOwnerByIndex(owner: string, index: BigNumberish)`
+##### `fetchMediaOfOwnerByIndex(owner: string, index: BigNumberish)`
+
 Zoraインスタンスの指定のオーナーの指定インデックスのmediaIdを取得
 
-* `fetchTotalMedia()`
-mintされたnon-burned mediaの総数を取得
+##### `fetchTotalMedia()`
 
-* `fetchMediaByIndex(index: BigNumberish)`
+mintされた有効なメディア(non-burned media)の総数を取得
+
+##### `fetchMediaByIndex(index: BigNumberish)`
+
 インデックスからmediaIdを取得
 
-* `fetchApproved(mediaId: BigNumberish)`
+##### `fetchApproved(mediaId: BigNumberish)`
+
 指定のmediaIdの `approved account` を取得
 
-* `fetchIsApprovedForAll(owner: string, operator: string)`
+##### `fetchIsApprovedForAll(owner: string, operator: string)`
+
 指定されたオペレーターが指定された所有者が所有するすべてのメディアが承認されているかを取得
 
 #### Write Functions
 
-* `mint(mediaData: MediaData, bidShares: BidShares)`
+##### `mint(mediaData: MediaData, bidShares: BidShares)`
+
 cryptomedia を新規登録(鋳造)する
 bidShares: 制作者に永続的に入る入札料（の手数料）の割合。
 
-* `mintWithSig(creator: BigNumberish, mediaData: MediaData, bidShares: BidShares, sig: EIP712Signature)`
+##### `mintWithSig(creator: BigNumberish, mediaData: MediaData, bidShares: BidShares, sig: EIP712Signature)`
+
 署名付きメッセージ（signed message）を持って cryptomedia を製作者に変わりに新規登録(鋳造)する
 sig: ブロックチェーン上で検証される eip-712 準拠の署名
 
-* `updateContentURI(mediaId: BigNumberish)`
+##### `updateContentURI(mediaId: BigNumberish)`
+
 メディアの`contentURI`を更新
 
-* `updateMetadataURI(mediaId: BigNumberish)`
+##### `updateMetadataURI(mediaId: BigNumberish)`
+
 メディアの`metadataURI`を更新
 
-* `setAsk(mediaId: BigNumberish, ask: Ask)`
-メディアの買値（`Ask`）を設定
+##### `setAsk(mediaId: BigNumberish, ask: Ask)`
 
-* `removeAsk(mediaId: BigNumberish)`
-メディアの買値（`Ask`）を削除
+メディアの販売価格（`Ask`）を設定
 
-* `setBid(mediaId: BigNumberish, bid: Bid)`
-メディアの売値（`Bid`）を設定
+##### `removeAsk(mediaId: BigNumberish)`
 
-* `removeBid(mediaId: BigNumberish)`
-メディアの売値（`Bid`）を削除
+メディアの販売価格（`Ask`）を削除
 
-* `acceptBid(mediaId: BigNumberish, bid: Bid)`
-メディアの売値（`Bid`）を承認
+##### `setBid(mediaId: BigNumberish, bid: Bid)`
 
-* `permit(spender: string, mediaId: BigNumberish, sig: EIP712Signature)`
+メディアへの入札（`Bid`）を設定
+
+##### `removeBid(mediaId: BigNumberish)`
+
+メディアへの入札（`Bid`）を削除
+
+##### `acceptBid(mediaId: BigNumberish, bid: Bid)`
+
+メディアへの入札（`Bid`）を承認
+
+##### `permit(spender: string, mediaId: BigNumberish, sig: EIP712Signature)`
+
 メディアの所有者に代わって指定のアドレスがmediaを使用できるようにする
 spender: メディアを使うことが許可されるアドレス
 
-* `burn(mediaId: BigNumberish)`
+##### `burn(mediaId: BigNumberish)`
+
 mediaを買い戻す?(burn)
 
-* `revokeApproval(mediaId: BigNumberish)`
+##### `revokeApproval(mediaId: BigNumberish)`
+
 承認を取り消す
 
-* `approve(to:string, mediaId:BigNumberish)`
+##### `approve(to:string, mediaId:BigNumberish)`
+
 指定されたメディアの指定されたアドレスへの承認を付与する
 to: メディアの承認を得るアドレス
 
-* `setApprovalForAll(operator: string, approved: boolean)`
+##### `setApprovalForAll(operator: string, approved: boolean)`
+
 msg.senderによって全メディア所有者への承認の付与
 operator: `approvalForAll`がセットされるアカウントのアドレス
 approved: operatorに対して承認を許可するかしないか?
 
-* `transferFrom(from: string, to: string, mediaId: BigNumberish)`
+##### `transferFrom(from: string, to: string, mediaId: BigNumberish)`
+
 指定のアドレスへ指定のメディアを所有権を移す
 
-* `safeTransferFrom()`
+##### `safeTransferFrom()`
+
 ERC721-Receiver Interface に準拠している場合に限り、 指定のアドレスへ指定のメディアを所有権を移す

@@ -1,24 +1,25 @@
 # learn Zora protocol
 
-Japanese translation for study at github.com/ourzora. It may not be correct. m(_ _)m
+Japanese translation for study at [github.com/ourzora](https://github.com/ourzora).
+possibly it's not be correct.🧐
 
 ## reps
 
-* zdk TypeScript MIT
+* zdk  
 The Zora Development Kit / Zoraプロトコルのツール
 
-* zora-cli TypeScript MIT
-ethereumブロックチェーン上のZoraプロトコルと対話するcliツール
+* zora-cli  
+Ethereum ブロックチェーン上のZoraプロトコルと対話するcliツール
 
-* Media Metadata Schemas A repository of known JSON metadata schemas for the Zora media protocol.
+* Media Metadata Schemas  
 Zoraプロトコルのスキーマを生成、バリデート、パースするツール
 
-* zora-v1-subgraph TypeScript
+* zora-v1-subgraph  
 Zoraプロトコル用のGraphQLインターフェイス
 
-* core A protocol to create, share and exchange universally accessible and valuable media on the internet. TypeScript
+* core  
 Zora Media Protocolのコントラクト、 universal value system for media.
-zdkから呼ばれる。
+zdk から呼ばれる。
 
-* cryptomedia What is Cryptomedia? HTML
+* cryptomedia What is Cryptomedia? HTML  
 https://cryptomedia.wtf/ のソースコード、書いてあることがちょっと面白い
