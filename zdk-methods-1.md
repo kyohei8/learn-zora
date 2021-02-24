@@ -138,11 +138,11 @@ bidShares: 制作者に永続的に入る入札料（の手数料）の割合。
 署名付きメッセージ（signed message）を持って cryptomedia を製作者に変わりに新規登録(鋳造)する
 sig: ブロックチェーン上で検証される eip-712 準拠の署名
 
-##### `updateContentURI(mediaId: BigNumberish)`
+##### `updateContentURI(mediaId: BigNumberish, tokenURI: string)`
 
 メディアの`contentURI`を更新
 
-##### `updateMetadataURI(mediaId: BigNumberish)`
+##### `updateMetadataURI(mediaId: BigNumberish, metadataURI: string)`
 
 メディアの`metadataURI`を更新
 
