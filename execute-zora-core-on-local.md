@@ -44,3 +44,14 @@ yarn deploy --chainId 1337
   "media": "0x6Be..."
 }
 ```
+
+デプロイしたコントラクトのアドレスを、zdk のコンストラクタに指定する。
+
+```js
+const zora = new Zora(
+  signer,
+  chainId,  // この場合chainIdは無視される
+  '0x6Be...',
+  '0x1ec...'
+);
+```

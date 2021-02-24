@@ -79,6 +79,7 @@ const hash = sha256FromBuffer(buf)
 
 const otherBuffer = Buffer.from('someContent')
 const otherHash = sha256FromBuffer(otherBuffer)
+// => 0x764fe5...
 ```
 
 #### `sha256FromHexString(data: string)`
@@ -89,6 +90,7 @@ hex stringから sha256 を生成する。
 const buf = Buffer.from('someContent')
 const hexString = '0x'.concat(buf.toString('hex'))
 const hash = sha256FromHexString(hexString)
+// => 0x764fe5...
 ```
 
 #### `sha256FromFile(pathToFile: string, chunkSize: number)`
@@ -114,7 +116,7 @@ ERC-20標準の拡張として `Permit` が指定され、ユーザが `ETH` を
 - updateMetadataURI
 - transfer
 
-今のところ、Signer は ethers Wallet オブジェクトでなければなりません。しかし、近いうちにどんなSignerでもサポートするようになるでしょう。
+今のところ、Signer は ethers Wallet オブジェクトでなければなりません。しかし、近いうちにどんなSignerでもサポートするようになる。
 
 ```ts
 const provider = new JsonRpcProvider()
@@ -122,6 +124,10 @@ const [mainWallet, otherWallet] = generatedWallets(provider)
 const rinkebyZora = new Zora(mainWallet, 4)
 const deadline = Math.floor(new Date().getTime() / 1000) + 60 * 60 * 24 // 24 hours
 const domain = rinkebyZora.eip712Domain()
+// => { chainId: 1337, name: "Zora", verifyingContract: "0x6Be6..." (Mediaコントラクトのアドレス)
+//   version: "1"
+//   }
+
 const eipSig = await signPermitMessage(
   mainWallet,
   otherWallet.address,
