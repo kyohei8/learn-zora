@@ -29,6 +29,14 @@ const mediaData = constructMediaData(
   contentHash,
   metadataHash
 )
+/*  MediaData =>
+{
+  metadataURI: "https://ipfs.io/ipfs/QmY..",
+  tokenURI: "https://ipfs.io/ipfs/QmVy...",
+  contentHash: "0x9e783...",
+  metadataHash: "0xe549c...",
+}
+*/
 ```
 
 #### `constructAsk(currency: string, amount: BigNumberish)`

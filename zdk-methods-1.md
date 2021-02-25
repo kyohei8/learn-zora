@@ -57,39 +57,40 @@ await zora.totalSupply()
 
 #### Read Functions
 
-##### `fetchContentHash(mediaId: BigNumberish)`
+##### `fetchContentHash(mediaId: BigNumberish) => string`
 
 メディアの `contentHash` を取得
 
-##### `fetchMetadataHash(mediaId: BigNumberish)`
+##### `fetchMetadataHash(mediaId: BigNumberish) => string`
 
 メディアの `metadataHash` を取得
 
-##### `fetchContentURI(mediaId: BigNumberish)`
+##### `fetchContentURI(mediaId: BigNumberish) => string`
 
 メディアの `contentURI` を取得
 
-##### `fetchMetadataURI(mediaId: BigNumberish)`
+##### `fetchMetadataURI(mediaId: BigNumberish) => string`
 
 メディアの `metadataURI` を取得
 
-##### `fetchCreator(mediaId: BigNumberish)`
+##### `fetchCreator(mediaId: BigNumberish) => string`
 
 メディアの `creator` を取得
 
-##### `fetchCurrentBidShares(mediaId: BigNumberish)`
+##### `fetchCurrentBidShares(mediaId: BigNumberish) => BidShares`
 
 メディアの現在の `bidShares` を取得
 
-##### `fetchCurrentAsk(mediaId: BigNumberish)`
+##### `fetchCurrentAsk(mediaId: BigNumberish) => Ask`
 
-メディアの現在の販売価格 `Ask` を取得
+メディアの現在の販売価格 `Ask` を取得  
+デフォルト（設定されていない場合）は0となり、販売できない状態となる。
 
 ##### `fetchCurrentBidForBidder(mediaId: BigNumberish, bidder: string)`
 
 メディアの現在の入札者(bidder)の入札額(`Bid`)を取得
 
-##### `fetchPermitNonce(address: string)`
+##### `fetchPermitNonce(address: string, mediaId: BigNumberis)`
 
 アドレスの次の許可されたnonceを取得
 permit nonceとは？
@@ -98,11 +99,11 @@ permit nonceとは？
 
 アドレスの次の `mintWithSig nonce` を取得
 
-##### `fetchBalanceOf(address: string)`
+##### `fetchBalanceOf(owner: string) => BigNumber`
 
-Zoraインスタンスのアドレスのbalanceを取得
+Zoraインスタンスのアドレスのbalance（所有しているトークンの数）を取得
 
-##### `fetchOwnerOf(mediaId: BigNumberish)`
+##### `fetchOwnerOf(mediaId: BigNumberish) => Promise<string>`
 
 Zoraインスタンスのメディアのオーナーを取得
 
@@ -110,21 +111,21 @@ Zoraインスタンスのメディアのオーナーを取得
 
 Zoraインスタンスの指定のオーナーの指定インデックスのmediaIdを取得
 
-##### `fetchTotalMedia()`
+##### `fetchTotalMedia() => Promise<BigNumber>`
 
 mintされた有効なメディア(non-burned media)の総数を取得
 
-##### `fetchMediaByIndex(index: BigNumberish)`
+##### `fetchMediaByIndex(index: BigNumberish) => Promise<BigNumber>`
 
 インデックスからmediaIdを取得
 
-##### `fetchApproved(mediaId: BigNumberish)`
+##### `fetchApproved(mediaId: BigNumberish) => Promise<string>`
 
-指定のmediaIdの許可されたアカウント（`approved account`） を取得
+指定のmediaIdの許可されたアカウント（`approved account`） を取得。approved accountは一つしか持てない。
 
-##### `fetchIsApprovedForAll(owner: string, operator: string)`
+##### `fetchIsApprovedForAll(owner: string, operator: string) => Promise<boolean>`
 
-指定されたオペレーターが指定された所有者が所有するすべてのメディアが承認されているかを取得
+指定されたオペレーターアカウントが指定された所有者が所有するすべてのメディアが承認されているかを取得
 
 #### Write Functions
 
@@ -146,13 +147,15 @@ sig: ブロックチェーン上で検証される eip-712 準拠の署名
 
 メディアの`metadataURI`を更新
 
-##### `setAsk(mediaId: BigNumberish, ask: Ask)`
+##### `setAsk(mediaId: BigNumberish, ask: Ask) => Promise<Tx>`
 
-メディアの販売価格（`Ask`）を設定
+メディアの販売価格（`Ask`）を設定   
+ownerまたはapprovedされたアカウントのみ実行可能。
 
-##### `removeAsk(mediaId: BigNumberish)`
+##### `removeAsk(mediaId: BigNumberish) => Promise<Tx>`
 
-メディアの販売価格（`Ask`）を削除
+メディアの販売価格（`Ask`）を削除  
+ownerまたはapprovedされたアカウントのみ実行可能。
 
 ##### `setBid(mediaId: BigNumberish, bid: Bid)`
 
@@ -173,27 +176,32 @@ spender: メディアを使うことが許可されるアドレス
 
 ##### `burn(mediaId: BigNumberish)`
 
-mediaを買い戻す?(burn)
+mediaをburnし、読み取り専用（bid,ask不可）とする。
+
+##### `approve(to:string, mediaId:BigNumberish)`
+
+指定されたメディアの指定されたアドレスへの承認を付与する
+to: メディアの承認を得るアドレス  
+承認者は1つしかもてない。（再度approveを行うと上書きされる）
 
 ##### `revokeApproval(mediaId: BigNumberish)`
 
 承認を取り消す
 
-##### `approve(to:string, mediaId:BigNumberish)`
-
-指定されたメディアの指定されたアドレスへの承認を付与する
-to: メディアの承認を得るアドレス
-
 ##### `setApprovalForAll(operator: string, approved: boolean)`
 
 msg.senderによって全メディア所有者への承認の付与
 operator: `approvalForAll`がセットされるアカウントのアドレス
-approved: operatorに対して承認を許可するかしないか?
+approved: operatorに対して承認を許可するかしないか（設定する場合はtrue, 外す場合は:false)
+
+設定すると**ownerは権限失い、operatorが操作をできる**ようになる。
 
 ##### `transferFrom(from: string, to: string, mediaId: BigNumberish)`
 
-指定のアドレスへ指定のメディアを所有権を移す
+指定のアドレスへ指定のメディアを所有権を移す。  
+transferした際approved accountは外れる。
 
 ##### `safeTransferFrom()`
 
 ERC721-Receiver Interface に準拠している場合に限り、 指定のアドレスへ指定のメディアを所有権を移す
+（method not foundで動かなかった。。）
